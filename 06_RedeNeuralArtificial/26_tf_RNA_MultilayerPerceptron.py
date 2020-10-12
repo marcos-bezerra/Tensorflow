@@ -9,25 +9,34 @@
 # É importante notar que em redes MLP, embora você não saiba as saídas desejadas dos neurônios das camadas ocultas da rede, é sempre possível aplicar um método de 
 # aprendizagem supervisionado com base na minimização de uma função de erro através da aplicação de técnicas de gradient-descent. 
 
-# Imports
-import numpy as np
-import tensorflow as tf
+
+########################################## Importação das bibliotecas
+
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-# Gerando dados sintéticos
+import numpy as np
+import tensorflow as tf
 
-# Hiperparâmetros
+import warnings
+warnings.simplefilter('ignore')
+
+
+########################################## Definindo os hiperparâmetros
+
 size = 200000
 num_epochs = 10
 learning_rate = 0.001
 
+
+########################################## Gerando os dados sintéticos
+
 # Gerando dados para x
 # https://docs.scipy.org/doc/numpy-1.15.1/reference/generated/numpy.random.randint.html
 # https://docs.scipy.org/doc/numpy/reference/generated/numpy.dstack.html
-x1 = np.random.randint(0, 100, size)
+x1 = np.random.randint(0, 100, size) # ranint cria 200000 valores randomicos inteiros entre 0 e 100
 x2 = np.random.randint(0, 100, size)
-x_treino = np.dstack((x1, x2))[0]
+x_treino = np.dstack((x1, x2))[0] # dstack concatena uma única matriz (200000, 2)
 
 # Gerando dados para y
 y_treino = 3*(x1**(1/2)) + 2*(x2**2)
@@ -35,12 +44,13 @@ y_treino = 3*(x1**(1/2)) + 2*(x2**2)
 # Print
 print("\nValores e shape de x:")
 print(x_treino)
-print(x_treino.shape)
+print("Dimensão x_treino:",x_treino.shape)
 print("\nValores e shape de y:")
 print(y_treino)
-print(y_treino.shape)
+print("Dimensão y_treino:",y_treino.shape)
 
-# Método 1 para construir modelos MPL com TF2
+
+########################################## Método 1 para construir modelos MPL com TF2
 
 # tf.keras.Sequential + fit
 
@@ -50,18 +60,20 @@ modelo_v1 = tf.keras.Sequential()
 # Camada 1 - camada de entrada
 modelo_v1.add(tf.keras.layers.Dense(64, input_shape = (2,) , activation = 'sigmoid'))
 
-# Camada 2 - camada intermediária
+# Camada 2 - camada intermediária ou oculta
 modelo_v1.add(tf.keras.layers.Dense(128, activation = 'relu'))
 
 # Camada 3 - camada de saída
-modelo_v1.add(tf.keras.layers.Dense(1))
+modelo_v1.add(tf.keras.layers.Dense(1)) # Dense(1), a saída será somente um neurônio
 
-# Otimização do modelo com 
+# Otimização do modelo com o otimizador Adam
 modelo_v1.compile(optimizer = tf.keras.optimizers.Adam(learning_rate), loss = tf.keras.losses.MSE)
 
 # https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/Adam
 
-# Treinamento do modelo
+
+########################################## Treinando o modelo
+
 print("\nTreinamento do modelo:")
 modelo_v1.fit(x = x_treino, y = y_treino, epochs = num_epochs)
 
@@ -73,7 +85,8 @@ modelo_v1.summary()
 scores_treino = modelo_v1.evaluate(x_treino, y_treino, verbose = 0)
 print("\nErro Final em Treino: {:.0f}".format(scores_treino))
 
-# Testando o modelo
+
+########################################## Testando o modelo
 
 # Gerando novos dados para x
 x1 = np.array([100, 9, 62, 79, 94, 91, 71, 41])
@@ -96,11 +109,5 @@ for i in range(5):
 	print ('''Entrada(x): ({}, {}), Saida(y): ({:.0f}), Previsão do Modelo(y_pred): ({:.0f})'''.format(x1[i], x2[i], y_teste[i], y_pred[i][0]))
 
 print("\n")
-
-
-
-
-
-
 
 

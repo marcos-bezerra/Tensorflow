@@ -1,12 +1,14 @@
 # Redes Neurais - Multilayer Perceptron 
 
-# Imports
+
+########################################## Importando as bibliotecas
 import numpy as np
-import tensorflow as tf
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
 
-# Gerando dados sintéticos
+
+########################################## Gerando dados sintéticos
 
 # Hiperparâmetros
 size = 200000
@@ -14,6 +16,7 @@ num_epochs = 20
 learning_rate = 0.0001
 n_batches = 10000
 batch_size = 100
+
 
 # Gerando dados para x
 # https://docs.scipy.org/doc/numpy-1.15.1/reference/generated/numpy.random.randint.html
@@ -33,7 +36,8 @@ print("\nValores e shape de y:")
 print(y_treino)
 print(y_treino.shape)
 
-# Método 3 para construir modelos MPL com TF2
+
+########################################## Método 3 para construir modelos MPL com TF2
 # Ideal quando o volume de dados for muito grande
 
 # tf.keras.Sequential sem fit() mas usando tf.GradientTape()
@@ -89,7 +93,7 @@ print("\nSumário do modelo:")
 modelo_v3.summary()
 
 
-# Testando o Modelo
+########################################## Testando o Modelo
 
 # Gerando novos dados para x
 x1 = np.array([100, 9, 62, 79, 94, 91, 71, 41])
@@ -112,7 +116,8 @@ for i, (batch_xs_teste, batch_ys_teste) in enumerate(dataset_teste.take(n_batche
     
 print ('\nTaxa de Erro Final em Teste: ', np.mean(loss.numpy()))
 
-# Fazendo previsões
+
+########################################## Fazendo previsões
 print("\nFazendo Previsões com o Modelo...")
 y_pred = modelo_v3.predict(x_teste)
 
@@ -124,11 +129,11 @@ for i in range(5):
 print("\n")
 
 
+########################################## Salvando e Carregando o modelo
+
 # Salvando o modelo
 modelo_v3.save('modelo_v3.h5')
 
 # Carregando o modelo salvo
 novo_modelo_v3 = tf.keras.models.load_model('modelo_v3.h5')
-
-
 

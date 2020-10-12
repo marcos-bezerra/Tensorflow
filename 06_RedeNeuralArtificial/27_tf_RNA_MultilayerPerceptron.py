@@ -1,26 +1,32 @@
 # Redes Neurais - Multilayer Perceptron 
 
-# Imports
-import numpy as np
-import tensorflow as tf
+########################################## Importando as bibliotecas
+
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import numpy as np
+import tensorflow as tf
 
-# Gerando dados sintéticos
+
+########################################## Gerando dados sintéticos
 
 # Hiperparâmetros
 size = 200000
 num_epochs = 10
 learning_rate = 0.001
 
-# Gerando dados para x
+
+########################################## Gerando dados para x
+
 # https://docs.scipy.org/doc/numpy-1.15.1/reference/generated/numpy.random.randint.html
 # https://docs.scipy.org/doc/numpy/reference/generated/numpy.dstack.html
 x1 = np.random.randint(0, 100, size)
 x2 = np.random.randint(0, 100, size)
 x_treino = np.dstack((x1, x2))[0]
 
-# Gerando dados para y
+
+########################################## Gerando dados para y
+
 y_treino = 3*(x1**(1/2)) + 2*(x2**2)
 
 # Print
@@ -31,7 +37,8 @@ print("\nValores e shape de y:")
 print(y_treino)
 print(y_treino.shape)
 
-# Método 2 para construir modelos MPL com TF2
+
+########################################## Método 2 para construir modelos MPL com TF2
 
 # tf.keras.Model
 class Modelo(tf.keras.Model):
@@ -50,7 +57,9 @@ class Modelo(tf.keras.Model):
         x = self.saida(x)
         return x
 
-# Cria o modelo
+
+########################################## Criando o modelo
+
 modelo_v2 = Modelo()
 
 # Treina o modelo
@@ -65,7 +74,7 @@ scores_treino = modelo_v2.evaluate(x_treino, y_treino, verbose = 0)
 print("\nErro Final em Treino: {:.0f}".format(scores_treino))
 
 
-# Testando o modelo
+########################################## Testando o modelo
 
 # Gerando novos dados para x
 x1 = np.array([100, 9, 62, 79, 94, 91, 71, 41])
@@ -88,3 +97,4 @@ for i in range(5):
 	print ('''Entrada(x): ({}, {}), Saida(y): ({:.0f}), Previsão do Modelo(y_pred): ({:.0f})'''.format(x1[i], x2[i], y_teste[i], y_pred[i][0]))
 
 print("\n")
+
