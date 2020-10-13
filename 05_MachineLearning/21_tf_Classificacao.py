@@ -6,14 +6,16 @@
 
 
 # Imports
-import math
-import numpy as np
-import matplotlib.pyplot as plt
-import tensorflow as tf
-from tensorflow import keras
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
+import math
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+import matplotlib.pyplot as plt
+
+import warnings; warnings.simplefilter('ignore')
 
 # Usaremos o conjunto de dados FashionMNIST publicado pela Zalando Research, que é um pouco mais difícil do que o conjunto de dados escrito à mão do MNIST. 
 # Este conjunto de dados contém imagens de itens de vestuário, como calças, casacos, bolsas etc. O conjunto de dados consiste em 60.000 imagens de treinamento e 10.000 imagens 

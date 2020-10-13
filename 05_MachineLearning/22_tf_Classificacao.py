@@ -6,13 +6,15 @@
 
 
 # Imports
-import math
-import numpy as np
-import matplotlib.pyplot as plt
-from tensorflow import keras
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
+import math
+import numpy as np
 import tensorflow as tf
+from tensorflow import keras
+import matplotlib.pyplot as plt
+
 import warnings; warnings.simplefilter('ignore')
 
 # Usaremos o conjunto de dados FashionMNIST publicado pela Zalando Research, que é um pouco mais difícil do que o conjunto de dados escrito à mão do MNIST. 

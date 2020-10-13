@@ -29,28 +29,23 @@ modelo logit, e classificador de máxima entropia. Wikipedia
 
 
 ########################################## Importando bibliotecas
-
-import math
-
 import os # configurando o nível de log
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
+import math
 import tensorflow as tf
 from tensorflow.keras.datasets import fashion_mnist # importando dataset fashion_mnist 
 
-import warnings 
-warnings.simplefilter('ignore')
+import warnings; warnings.simplefilter('ignore')
 
 
 ########################################## Importando dataset
-
 # x: images
 # Y: labels
 (x_treino, y_treino), (x_teste, y_teste) = fashion_mnist.load_data() # metodo load_data divide em treino e teste
 
 
 ########################################## Normalizando as imagens
-
 # 0 = branco
 # 255 = preto
 # a imagem é uma matriz com vários pixels, que varia de 0 a 255 ( tom cinza )
@@ -67,7 +62,6 @@ x_teste  = tf.reshape(x_teste, shape = (-1, 784)) # transformando de bidimension
 
 
 ########################################## Construindo o Modelo
-
 # definindo os pesos, variáveis W (weight) e b (bias - viés)
 # inicializando os Coeficientes de Forma Randômica com Distribuição Normal
 # distribuição normal é um conjunto de dados aleatórios com média igual a 0 e desvio padrão igual a 1.
@@ -76,7 +70,6 @@ vieses  = tf.Variable(tf.random.normal(shape = (10,), dtype = tf.float64)) # mat
 
 
 ########################################## Função para o cálculo da regressão logísitica
-
 # g(y) = β(x) + βo  
 def logistic_regression(x): # vetor unidimensional
     lr = tf.add(tf.matmul(x, pesos), vieses)
@@ -109,7 +102,6 @@ def grad(x, y): # função de otimização da função de custo
 
 
 ########################################## Hiperparâmetros
-
 n_batches = 10000 # quantidade de lotes / batch
 learning_rate = 0.01 # taxa de aprendizado que é a magnitude do aumento (0,01 ou 0,001)
 batch_size = 128 # lotes de dados a serem colocados na memória para cálculo do SGD
@@ -120,7 +112,6 @@ optimizer = tf.optimizers.SGD(learning_rate) # calcula a magnitude do aumento no
 
 
 ########################################## Função para o cálculo da Acurácia
-
 def accuracy(y_true, y_pred):
     y_true = tf.cast(y_true, dtype = tf.int32) # tf.cast converte tipo de dado
     preds = tf.cast(tf.math.argmax(y_pred, axis = 1), dtype = tf.int32) # a função tf.argmax trará a maior probabilidade
@@ -133,7 +124,6 @@ dataset_treino = dataset_treino.repeat().shuffle(x_treino.shape[0]).batch(batch_
 
 
 ########################################## Iniciando o treinamento
-
 print ("\nIniciando o Treinamento!")
 
 # Ciclo de treinamento
@@ -162,7 +152,6 @@ print("Número do Batch: %i, Erro do Modelo: %f, Acurácia em Treino: %f" % (bat
 print ("\nTreinamento concluído!")
 
 ########################################## Testando o Modelo
-
 # Preparando os dados de teste
 dataset_teste = tf.data.Dataset.from_tensor_slices((x_teste, y_teste))
 dataset_teste = dataset_teste.repeat().shuffle(x_teste.shape[0]).batch(batch_size)

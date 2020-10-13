@@ -5,13 +5,13 @@
 # Imports
 import numpy as np
 import matplotlib.pyplot as plt
-import tensorflow as tf
 from sklearn import datasets
 from scipy.spatial import cKDTree
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import scale
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
 from tensorflow.python.framework import ops
 ops.reset_default_graph()
 
